@@ -1,0 +1,23 @@
+<main>
+  <div class="payment-section">
+    <h2>Select your payment method</h2>
+    <div class="payment-box"></div>
+  </div>
+
+  <div class="order-summary">
+    <h2>Order Summary</h2>
+    <div class="summary-card">
+      {{#each products}}
+        <div class="product-row">
+          <div class="product-emoji">{{this.emoji}}</div>
+          <span class="product-name">{{this.name}}</span>
+          <span class="product-price">${{this.price}}</span>
+        </div>
+      {{/each}}
+      <div class="total-row">
+        <span>Total:</span>
+        <span>${{total}}</span>
+      </div>
+    </div>
+  </div>
+</main>

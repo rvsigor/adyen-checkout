@@ -1,0 +1,48 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #fff; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+
+header { padding: 20px 40px; border-bottom: 1px solid #eee; display: flex; align-items: center; }
+header svg { height: 32px; }
+
+main { flex: 1; display: flex; gap: 40px; padding: 40px; max-width: 960px; margin: 0 auto; width: 100%; }
+
+.adyen-logo {
+  height: 32px;
+  /* Aplica a cor verde oficial da Adyen (#0ABF53) via filtro CSS 
+  filter: brightness(0) saturate(100%) invert(58%) sepia(97%) saturate(400%) hue-rotate(95deg) brightness(95%) contrast(101%);
+  */
+}
+
+.payment-section { flex: 1; }
+.payment-section h2 { font-size: 11px; letter-spacing: 1px; color: #888; margin-bottom: 16px; text-transform: uppercase; }
+.payment-box { background: #f4f6f8; border-radius: 12px; height: 280px; }
+
+.order-summary { width: 320px; }
+.order-summary h2 { font-size: 11px; letter-spacing: 1px; color: #888; margin-bottom: 16px; text-transform: uppercase; }
+.summary-card { border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; }
+.product-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+.product-row:last-of-type { border-bottom: none; }
+.product-emoji { font-size: 28px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: #f4f6f8; border-radius: 8px; }
+.product-name { flex: 1; font-size: 15px; }
+.product-price { font-size: 15px; font-weight: 500; }
+.total-row { display: flex; justify-content: space-between; padding-top: 16px; border-top: 1px solid #e0e0e0; margin-top: 8px; font-weight: bold; font-size: 16px; }
+
+footer { text-align: center; padding: 20px 40px; font-size: 12px; color: #aaa; border-top: 1px solid #eee; }
+
+/* Result pages */
+.result-page { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; }
+
+.result-icon { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+.result-icon svg { width: 36px; height: 36px; }
+.result-icon--success { background: #e6f9ee; }
+.result-icon--failed  { background: #fde8e8; }
+.result-icon--pending { background: #fff4e0; }
+.result-icon--error   { background: #fde8e8; }
+
+.result-title { font-size: 24px; font-weight: bold; margin-bottom: 8px; color: #333; }
+.result-message { font-size: 15px; color: #888; margin-bottom: 32px; max-width: 360px; line-height: 1.5; }
+.result-ref { margin-top: 20px; font-size: 13px; color: #aaa; }
+
+.result-btn { display: inline-block; padding: 12px 28px; border-radius: 8px; font-size: 15px; font-weight: 500; text-decoration: none; cursor: pointer; border: none; }
+.result-btn--primary { background: #0ABF53; color: #fff; }
+.result-btn--secondary { background: #f4f6f8; color: #333; }
