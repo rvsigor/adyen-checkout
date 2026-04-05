@@ -1,7 +1,14 @@
+{{!-- Hidden divs with data passed from the Express server --}}
+<div id="clientKey" class="hidden">{{ clientKey }}</div>
+<div id="total" class="hidden">{{ total }}</div>
+
 <main>
   <div class="payment-section">
     <h2>Select your payment method</h2>
-    <div class="payment-box"></div>
+    <div class="payment-box">
+      <!-- Container to receive the drop-in. #adyen. -->
+      <div id="dropin-container"></div>
+    </div>
   </div>
 
   <div class="order-summary">
@@ -21,3 +28,85 @@
     </div>
   </div>
 </main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+
+    // Call components from Adyen SDK. #adyen.
+    const { AdyenCheckout, Dropin } = window.AdyenWeb;
+
+    // Get the clientKey and total from the hidden divs the server put on the page. #adyen.
+    const clientKey = document.getElementById('clientKey').innerText.trim();
+    const totalDollars = parseInt(document.getElementById('total').innerText.trim());
+
+    // Adyen amounts are in "minor units". #adyen.
+    const amountInCents = totalDollars * 100;
+
+    // Ask our backend to create a payment session with Adyen. #adyen.
+    const sessionRes = await fetch('/api/sessions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: amountInCents })
+    });
+
+    if (!sessionRes.ok) {
+      console.error('Failed to create payment session');
+      return;
+    }
+
+    // The full session object from Adyen (contains id, sessionData, amount, etc.)
+    const session = await sessionRes.json();
+
+    // Initialize the Adyen checkout with the session. #adyen.
+    const checkout = await AdyenCheckout({
+      environment: 'test', // use 'live' in production
+      clientKey: clientKey,
+      session: session,
+
+      // Called when the payment is fully completed (card payments, no redirect needed). #adyen.
+      onPaymentCompleted: (result) => {
+        switch (result.resultCode) {
+          case 'Authorised':
+            window.location.href = '/success';
+            break;
+          case 'Pending':
+          case 'Received':
+            window.location.href = '/pending';
+            break;
+          default:
+            window.location.href = '/failed';
+        }
+      },
+
+      // Called when the payment is declined or refused. #adyen.
+      onPaymentFailed: (result) => {
+        window.location.href = '/failed';
+      },
+
+      // Called when a technical error occurs (network issue, bad config, etc.).
+      onError: (error) => {
+        console.error('Adyen Drop-in error:', error);
+        window.location.href = '/failed';
+      }
+    });
+
+    // Create and mount the Drop-in component inside #dropin-container. #adyen.
+    // In v6 this is done with `new Dropin(...)` instead of checkout.create('dropin').
+    new Dropin(checkout, {
+      paymentMethodsConfiguration: {
+        card: {
+          hasHolderName: true,
+          holderNameRequired: true,
+          placeholders: { 
+            cardNumber: '**** **** **** ****',
+            expiryDate: 'MM/YY', 
+            securityCodeThreeDigits: '123', 
+            securityCodeFourDigits: '1234',
+            holderName: 'Jhon Doe'
+          }
+        }
+      }
+    }).mount('#dropin-container');
+
+  });
+</script>
