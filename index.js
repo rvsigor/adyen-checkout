@@ -37,6 +37,7 @@ const apiKey = process.env.API_KEY;
 const client = new Client({ apiKey: apiKey, environment: "TEST" });
 
 // Instaciating our checkout with the Client. #adyen.
+// Instanciando o checkout com o metodo Client
 const checkoutApi = new CheckoutAPI(client);
 
 /* as a test im not using idempotencyKey. #adyen.

@@ -63,6 +63,7 @@
       clientKey: clientKey,
       session: session,
 
+      //Revisar sobre duplicidade
       // Called when the payment is fully completed (card payments, no redirect needed). #adyen.
       onPaymentCompleted: (result) => {
         switch (result.resultCode) {
