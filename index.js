@@ -83,7 +83,7 @@ app.get('/pending', (req, res) => res.render('pending'));
 // Session call made by the server, it will be started by the frontend JS. #adyen.
 app.post('/api/sessions', async (req, res) => {
   try {
-    // Generate a unique reference for this order (so we can track it).
+    // Generate a unique reference for this order (so we can track it). Business Logics will be needed.
     const orderRef = uuid();
 
     // The amount the customer will pay, sent from the frontend.

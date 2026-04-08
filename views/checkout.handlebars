@@ -1,4 +1,4 @@
-{{!-- Hidden divs with data passed from the Express server --}}
+<!-- Hidden divs with data passed from the server -->
 <div id="clientKey" class="hidden">{{ clientKey }}</div>
 <div id="total" class="hidden">{{ total }}</div>
 
@@ -35,7 +35,7 @@
     // Call components from Adyen SDK. #adyen.
     const { AdyenCheckout, Dropin } = window.AdyenWeb;
 
-    // Get the clientKey and total from the hidden divs the server put on the page. #adyen.
+    // Get the clientKey and total from the hidden divs. #adyen.
     const clientKey = document.getElementById('clientKey').innerText.trim();
     const totalDollars = parseInt(document.getElementById('total').innerText.trim());
 
